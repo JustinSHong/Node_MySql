@@ -7,3 +7,14 @@ CreateUser.addEventListener("submit", e => {
     // post new user to the database
     post("/createuser", { username, password });
 });
+
+function post(path, payload) {
+    return window.fetch(path, {
+        method: "POST",
+        headers: {
+            Accept: "application/json",
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify(data)
+    });
+}
