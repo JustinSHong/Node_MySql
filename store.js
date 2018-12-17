@@ -22,5 +22,19 @@ module.exports = {
             username,
             password
         });
+    },
+    authenticate({ username, password }) {
+        // get user's salt, use it to encrypt PW, and check it against the encrypted_password
+        console.log(`Authenticating user ${username}`);
+        return knex("user")
+            .where({ username })
+            .then(([user]) => {
+                if (!user) return { success: false };
+                const { hash } = saltHashPassword({
+                    password,
+                    salt: user.salt
+                });
+                return { success: hash === user.encrypted_password };
+            });
     }
 };
