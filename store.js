@@ -1,7 +1,7 @@
 const knex = require("knex")(require("./knexfile"));
 const crypto = require("crypto");
 
-function saltHashPassword(password, salt = randomString(0)) {
+function saltHashPassword({ password, salt = randomString(0) }) {
     const hash = crypto.createHmac("sha512", salt).update(password);
     return {
         salt,
