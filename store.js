@@ -14,12 +14,13 @@ function randomString() {
 }
 
 module.exports = {
-    saltHashPassword,
     createUser({ username, password }) {
         console.log(`Add user ${username} with password ${password}`);
+        const { salt, hash } = saltHashPassword({ password });
         return knex("user").insert({
-            username,
-            password
+            salt,
+            encrypted_password: hash,
+            username
         });
     },
     authenticate({ username, password }) {
